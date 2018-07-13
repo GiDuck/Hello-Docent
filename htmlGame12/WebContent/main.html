@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+.background{
+width:1280px;
+height:1024px;
+
+}
+
+.child{
+
+width:150px;
+height:250px;
+
+
+}
+
+.saying{
+
+width:300px;
+height:250px;
+
+}
+
+.default-Visible{
+visibility:hidden;
+}
+
+
+.sayingContent{
+
+width:280px;
+word-break:break-all;
+/* 영어 줄바꿈 */
+}
+
+.sayingContent1{
+
+width:220px;
+word-break:break-all;
+/* 영어 줄바꿈 */
+}
+
+
+p{
+
+font-size:2rem;
+   font-family:"맑은 고딕", serif;
+   font-weight: bold;
+   text-align: middle;
+
+
+
+}
+
+.inputField{
+
+border-top : 1px solid red;
+border-left : 1px solid red;
+border-right : 1px solid red;
+border-bottom : 1px solid red;
+
+
+
+
+}
+
+</style>
+
+<script type="text/javascript">
+
+var datas; 
+var randomNum;
+var run;
+var answer;
+
+
+
+
+
+function onCreate(){ //생성자 역할을 하는 함수
+	
+	/*  1. 첫 번째 캐릭터에게 말풍선을 띄워주고
+		2. 사회자 캐랙터에 클릭 이벤트를 부여한다. */
+
+	document.getElementById('saying1').style.visibility="visible";
+	document.getElementById('div_saying1').style.visibility="visible";
+	document.getElementById('input_answer').addEventListener('click',onClick);
+	document.getElementById('instruct_answer').addEventListener('click',onClick);
+
+	onLoadData();
+	pushData();
+	
+	
+	
+}
+
+/* onClick 메소드 */
+
+function onClick(){
+	
+	var user_answer;
+	
+	user_answer=prompt('정답을 입력하세요', '정답');
+	ansChecker(user_answer);
+	
+}
+
+
+
+
+/* Question 클래스 - 질문과 정답을 저장하는 객체  */
+function Question(ans,q1,q2,q3,url){ 
+	
+	this.ans=ans;
+	this.q1=q1;
+	this.q2=q2;
+	this.q3=q3;
+	this.url=url;
+	
+	
+}
+
+/* 유저가 입력한 정답을 맞는지 아닌지 확인 하는 함수 */
+
+function ansChecker(user_answer){
+	
+	var tagName;
+	
+	//현재 visible 상태인 말풍선을 찾아서(== 현재 턴을 찾아서), 정답과 유저가 적은 답을 비교해서 일치하면 게임을 종료 시킨다. 
+	if(document.getElementById('div_saying1').style.visibility == "visible"){
+		if(user_answer==answer){
+			tagName = 'saying1';
+			finish(tagName);
+		}else{
+			alert('땡! 정답이 아닙니다!');
+		}
+	}else if(document.getElementById('div_saying2').style.visibility == "visible"){
+		if(user_answer==answer){
+			tagName = 'saying2';
+			finish(tagName);
+		}else{
+			alert('땡! 정답이 아닙니다!');
+		}
+	}else if(document.getElementById('div_saying3').style.visibility == "visible"){
+		if(user_answer==answer){
+			tagName = 'saying3';
+			finish(tagName);
+		}else{
+			alert('땡! 정답이 아닙니다!');
+		}
+	}else if(document.getElementById('div_saying4').style.visibility == "visible"){
+		if(user_answer==answer){
+			tagName = 'saying4';
+			finish(tagName);
+		}else{
+			alert('땡! 정답이 아닙니다!');
+		}
+	}
+	
+	
+	
+	
+}
+
+function finish(tagName){ //게임을 종료 시키는 함수
+
+
+	document.getElementById(tagName).style.visibility = "hidden";
+	document.getElementById('div_'+tagName).style.visibility="hidden"; //말풍선과 내용 안보이게 처리
+	clearInterval(run); //스레드 종료
+	alert('Game over!');
+	
+}
+
+
+
+function onLoadData(){ //Question 객체에 데이터를 푸쉬
+	
+	datas = new Array(); //질문 목록을 저장하기 위한 리스트
+	
+	var question1 = new Question("로하스두부", "네모", "100% 유기농", "콩으로 만든 것", "http://www.pulmuoneshop.co.kr/goods/displayList.do?headCateCd=004");
+	datas.push(question1);
+	
+	var question2 = new Question("로하스", "풀무원의 모토", "유명한 과자 이름", "쇼핑몰의 이름!", "http://www.pulmuoneshop.co.kr/goods/displayList.do?headCateCd=004");
+	datas.push(question2);
+	
+	var question3 = new Question("로하스달걀", "국내산 100%", "닭이 낳는 것", "무살충제, 100%안전", "http://www.pulmuoneshop.co.kr/goods/displayList.do?headCateCd=004");
+	datas.push(question3);
+	
+	var question4 = new Question("로하스간장", "간장", "깊은 맛", "아주 건강한 요리법!", "http://www.pulmuoneshop.co.kr/goods/displayList.do?headCateCd=004");
+	datas.push(question4);
+
+}
+
+function pushData(){ //말풍선 속에 문장을 넣어주는 함수
+	
+	randomNum = randomRange(0, 3); //난수 생성 (범위 지정, 1~4번 까지)
+	
+	document.getElementById('div_saying1').innerHTML="<p id='sayingFont'>"+datas[randomNum].q1+"</p>";
+	document.getElementById('div_saying2').innerHTML="<p id='sayingFont'>"+datas[randomNum].q2+"</p>";
+	document.getElementById('div_saying3').innerHTML="<p id='sayingFont'>"+datas[randomNum].q3+"</p>";
+	document.getElementById('div_saying4').innerHTML="<p id='sayingFont'><a target='_blank' href='"+datas[randomNum].url+"'/>링크</p>";
+	answer=datas[randomNum].ans;
+	
+	
+	
+}
+
+function randomRange(n1, n2) { //난수 생성 함수
+	  return Math.floor( (Math.random() * (n2 - n1 + 1)) + n1 );
+	}
+
+function runThread(){ //1초마다 한 번씩 다른 말풍선이 나오게 하는 함수 (스레드 작동 함수)
+
+	
+		
+		var currentNum = 1; //첫번째 턴 시작 번호를 초기화
+		
+		run=setInterval(function(){
+					
+			console.log(currentNum);
+			
+					if(currentNum>4){
+						document.getElementById('child4').src="./images/tfirst4.png"; //실패 하였으므로 마지막 캐릭터를 슬픈 표정으로 바꾼다.
+						document.getElementById('input_answer').removeEventListener('click',onClick);
+						document.getElementById('instruct_answer').removeEventListener('click',onClick); //클릭 리스너 제거
+
+						/* window.open(datas[randomNum].url,"Hint Page!","fullscreen='yes'"); */
+						clearInterval(run); //스레드 종료
+						
+					}
+					
+					
+					if(currentNum==1){
+						document.getElementById('saying4').style.visibility="hidden";
+						document.getElementById('div_saying4').style.visibility="hidden"; //4번째 말풍선이 있을 경우 숨기고
+						document.getElementById('saying1').style.visibility="visible";
+						document.getElementById('div_saying1').style.visibility="visible"; //1번째 말풍선을 보여줌
+						currentNum++;} //다음 순서로 진행하기 위한 카운트
+					else if(currentNum==2){
+						document.getElementById('child1').src="./images/happy.png"; //1번째 캐릭터는 즐거운 표정으로 설정한다.
+						document.getElementById('child2').src="./images/tfirst1.png"; //2번째 캐릭터는 약간 초조한 표정으로 설정한다.
+						document.getElementById('saying1').style.visibility="hidden";
+						document.getElementById('div_saying1').style.visibility="hidden"; //1번째 말풍선 감추기
+						document.getElementById('saying2').style.visibility="visible";
+						document.getElementById('div_saying2').style.visibility="visible"; //2번째 말풍선 보여주기
+						currentNum++; //카운트
+						
+					}else if(currentNum==3){
+						document.getElementById('child2').src="./images/happy.png";
+						document.getElementById('child3').src="./images/tfirst2.png"; //3번째 캐릭터 많이 초조한 표정으로 설정.
+						document.getElementById('saying2').style.visibility="hidden";
+						document.getElementById('div_saying2').style.visibility="hidden"; //2번째 말풍선 감추기
+						document.getElementById('saying3').style.visibility="visible";
+						document.getElementById('div_saying3').style.visibility="visible"; //3번째 말풍선 보여주기
+						currentNum++;
+												
+					}else if(currentNum==4){ 
+						document.getElementById('child3').src="./images/happy.png";
+						document.getElementById('child4').src="./images/tfirst3.png"; //4번째 캐릭터 불안한 표정으로 설정
+						document.getElementById('saying3').style.visibility="hidden";
+						document.getElementById('div_saying3').style.visibility="hidden";
+						document.getElementById('saying4').style.visibility="visible";
+						document.getElementById('div_saying4').style.visibility="visible";
+						currentNum++;		
+						
+					}
+					
+					
+			
+		}, 1500); //스레드 반복 간격을 설정한다. (ms 단위로)
+		
+	
+	
+		
+	}
+	
+	
+	
+	
+
+
+
+</script>
+</head>
+<body>
+
+
+<div id = "wrap" class = "background">
+
+<!-- 백그라운드 이미지 -->
+<img src = "./images/back.png" class = "background" />
+
+<div id="input_answer" style="position:absolute; top:600px; left:70px;" >
+<img src = "./images/result.png" width="35%" height="35%"/></div>	
+
+<div style="position:absolute;  top:680px; left:200px;" class="sayingContent1" >
+<p id="instruct_answer">정답 맞추기!!! 여기를 클릭!</p></div>
+
+<!-- Player -->
+<div style="position:absolute; top:700px; left:450px;">
+<img id = "child1" src = "./images/child.png" class = "child" /></div>
+
+<!-- Player -->
+<div style="position:absolute;  top:700px; left:650px;" >
+<img id = "child2" src = "./images/child.png" class = "child"/></div>
+
+<!-- Player -->
+<div style="position:absolute;  top:700px; left:850px;" >
+<img id = "child3" src = "./images/child.png" class = "child"/></div>
+
+<!-- Player -->
+<div style="position:absolute;  top:700px; left:1050px;" >
+<img id = "child4" src = "./images/child.png" class = "child"/></div>
+
+<!-- 말풍선 1 -->
+<div style="position:absolute;  top:430px; left:380px;" >
+<img id = "saying1" src = "./images/saying1.png" class="saying default-Visible"/>
+</div>
+
+<div id="div_saying1" style="position:absolute;  top:410px; left:390px;" class="sayingContent default-Visible" >
+<p id="sayingFont1">대사1</p>
+</div>
+
+
+<!-- 말풍선 2 -->
+<div style="position:absolute; top:430px; left:580px;" >
+<img id = "saying2" src = "./images/saying1.png" class="saying default-Visible"/></div>
+
+<div id="div_saying2" style="position:absolute;  top:410px; left:600px;" class="sayingContent default-Visible">
+<p id="sayingFont2" >대사2</p>
+</div>
+
+
+<!-- 말풍선 3 -->
+<div style="position:absolute; top:430px; left:780px;" >
+<img id = "saying3" src = "./images/saying1.png" class="saying default-Visible "/></div>
+
+<div id="div_saying3" style="position:absolute;  top:410px; left:800px;" class="sayingContent default-Visible" >
+<p id="sayingFont3">대사3</p>
+</div>
+
+
+
+<!-- 말풍선 4 -->
+<div style="position:absolute; top:430px; left:980px;" >
+<img id = "saying4" src = "./images/saying1.png" class="saying default-Visible"/></div>
+
+
+<div id="div_saying4" style="position:absolute;  top:410px; left:1000px;" class="sayingContent default-Visible" >
+<p id="sayingFont4" >대사4</p>
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+onCreate();
+runThread();
+
+</script>
+
+
+</body>
+</html>
