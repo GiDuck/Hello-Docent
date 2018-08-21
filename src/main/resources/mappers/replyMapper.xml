@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.replyMapper">
+
+
+<!-- 해설 댓글 관련 mapper -->
+
+
+<!-- 해설 댓글 삽입 -->
+<insert id="insertCommentaryReply" parameterType="CommentaryReplyDTO">
+
+insert into TBL_CMTREPLYS values (#{CMTR_ID}, #{CMTR_REF}, #{CMTR_REPREF, jdbcType=VARCHAR}, #{CMTR_WRITERUID}, #{CMTR_CONTENT},  #{CMTR_DATE})
+
+</insert>
+
+<!-- 해설 댓글 가져오기 -->
+<select id="selectCommentaryReply" parameterType="String" resultType="CommentaryReplyDTO">
+
+select * from TBL_CMTREPLYS where CMTR_REF = #{id} order by CMTR_DATE DESC
+
+</select>
+
+
+<!-- 해설 댓글 삭제 -->
+<delete id="removeCommentaryReply" parameterType="String">
+
+delete from TBL_CMTREPLYS where CMTR_ID = #{id}
+
+</delete>
+
+<!-- 해설 댓글 수정 -->
+<update id="updateCommentaryReply" parameterType="CommentaryReplyDTO">
+
+update TBL_CMTREPLYS set CMTR_CONTENT = #{CMTR_CONTENT} where CMTR_ID = #{CMTR_ID}
+
+</update>
+
+
+
+
+<!-- 블로그 댓글 관련 mapper -->
+
+
+
+
+
+<insert id="insertBlogReply" parameterType="BlogReplyDTO">
+
+insert into TBL_COLREPLYS values (#{colr_id}, #{colr_ref}, #{colr_repref, jdbcType=VARCHAR}, #{colr_writeruid}, #{colr_content},  #{colr_date})
+
+</insert>
+
+<select id="selectBlogReply" parameterType="String" resultType="BlogReplyDTO">
+
+select * from TBL_COLREPLYS where colr_ref = #{id} order by colr_date DESC
+
+</select>
+
+
+
+<delete id="removeBlogReply" parameterType="String">
+
+delete from TBL_COLREPLYS where colr_id = #{id}
+
+</delete>
+
+
+<update id="updateBlogReply" parameterType="BlogReplyDTO">
+
+update TBL_COLREPLYS set colr_content = #{colr_content} where colr_id = #{colr_id}
+
+</update>
+
+
+
+
+</mapper>

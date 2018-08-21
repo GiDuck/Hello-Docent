@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.displayMapper">
+
+
+<select id="getMuseumInfo" resultType="map">
+
+select ep_name as name , ep_id  as museumID , count(*) as countSum from tbl_explace, tbl_display, tbl_mc
+where tbl_explace.ep_id = tbl_mc.mc_ref and tbl_mc. mc_code = tbl_display.dp_exp
+group by ep_name, ep_id
+order by ep_name ASC
+
+
+</select>
+
+<select id="getMuseumInfoDefault" resultType="map">
+
+select ep_name as name , ep_id  as museumID , count(*) as countSum from tbl_explace, tbl_display, tbl_mc
+where tbl_explace.ep_id = tbl_mc.mc_ref and tbl_mc. mc_code = tbl_display.dp_exp
+and tbl_display.DP_ID in (select CMT_REF from TBL_COMMENTRAY)
+group by ep_name, ep_id
+order by ep_name ASC
+
+
+</select>
+
+
+<select id="getDisplayInfoDefault" resultType="map" parameterType="map">
+
+<![CDATA[
+
+select DP_ID, DP_NAME, DP_EXP, DPL_ALTERNATIVETITLE, DPL_URL, DPL_IMAGEURL, DPL_TEMPORAL, EP_NAME
+from tbl_display dis, tbl_displayInfo disInfo, tbl_explace exp, tbl_mc mc
+where dis.DP_EXP = mc.MC_CODE
+and mc.MC_REF = exp.EP_ID
+and disInfo.DPL_ID = dis.DP_ID
+and dis.DP_ID in (select cmt_ref from tbl_commentray)
+and rownum >= #{prefix} and rownum <= #{suffix}
+
+]]>
+
+<choose>
+
+<when test="#{token}.equals('keyword')">
+and DP_NAME LIKE '%'|| #{keyword} || '%' 
+or DPL_ALTERNATIVETITLE LIKE '%'|| #{keyword} || '%'
+</when>
+
+<when test="#{token}.equals('temporal')">
+and DPL_TEMPORAL LIKE '%'|| #{keyword} || '%' 
+</when>
+
+</choose>
+order by dp_name asc
+
+</select>
+
+
+
+<select id="getDisplayInfo" resultType="map" parameterType="map">
+
+<![CDATA[
+
+select DP_ID, DP_NAME, DP_EXP, DPL_ALTERNATIVETITLE, DPL_URL, DPL_IMAGEURL, DPL_TEMPORAL, EP_NAME
+from tbl_display dis, tbl_displayInfo disInfo, tbl_explace exp, tbl_mc mc
+where dis.DP_EXP = mc.MC_CODE
+and mc.MC_REF = exp.EP_ID
+and disInfo.DPL_ID = dis.DP_ID
+and rownum >= #{prefix} and rownum <= #{suffix}
+
+]]>
+
+<choose>
+
+<when test="#{token}.equals('keyword')">
+and DP_NAME LIKE '%'|| #{keyword} || '%' 
+or DPL_ALTERNATIVETITLE LIKE '%'|| #{keyword} || '%'
+</when>
+
+<when test="#{token}.equals('temporal')">
+and DPL_TEMPORAL LIKE '%'|| #{keyword} || '%' 
+</when>
+
+</choose>
+order by dp_name asc
+
+</select>
+
+
+<select id="getDisplayInfoSimple" resultType="map" parameterType="String">
+
+select DP_NAME, DP_EXP, DPL_ALTERNATIVETITLE, DPL_DESCRIPTION, DPL_EXTENT ,DPL_URL, DPL_IMAGEURL, DPL_TEMPORAL, EP_NAME
+from tbl_display dis, tbl_displayInfo disInfo, tbl_explace exp, tbl_mc mc
+where dis.DP_EXP = mc.MC_CODE
+and mc.MC_REF = exp.EP_ID
+and disInfo.DPL_ID = dis.DP_ID
+and dis.dp_id = #{keyword}
+
+
+</select>
+
+
+
+</mapper>

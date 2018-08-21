@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.memberMapper">
+
+	<insert id="insertMember" parameterType="MemberDTO">
+
+		insert into tbl_member values (#{user_nick}, #{user_iuid}, #{user_uid},
+		#{user_email, jdbcType=VARCHAR},
+		#{user_loginType}, #{user_profilePhoto, jdbcType=VARCHAR}, #{user_isDocent})
+
+	</insert>
+	
+	
+	
+	<select id="findUser" parameterType="String" resultType="MemberDTO">
+ 
+
+	 select * from tbl_member where user_uid = #{key}
+
+	</select>
+	
+	
+	<select id="getMemberSimpleInfo" parameterType="String" resultType="map">
+	
+	select user_nick, user_profilephoto from tbl_member where user_iuid = #{id}
+	
+	</select>
+	
+	
+	
+	<select id="getMemberInfo" parameterType="String" resultType="MemberDTO">
+	
+	select * from tbl_member where user_iuid = #{id}
+	
+	
+	</select>
+	
+	<delete id="deleteMember" parameterType="String">
+	
+	delete * from tbl_member where user_iuid = #{id}
+	
+	</delete>
+	
+	<insert id="insertRequestDocent" parameterType="RequestDocentDTO">
+	
+	insert into tbl_requestDocent values (#{req_id}, #{req_name}, #{req_telnum}, #{req_email}, #{req_professional} , #{req_introduce} , #{req_date})
+	
+	</insert>
+	
+	<update id="updateMemberInfo" parameterType="map">
+	
+	update TBL_MEMBER SET user_nick = #{nickname}, user_email = #{email, jdbcType=VARCHAR}, user_profilephoto = #{profilePhoto, jdbcType=VARCHAR}
+	where user_iuid = #{userUid}
+	
+	</update>
+
+
+
+
+</mapper>

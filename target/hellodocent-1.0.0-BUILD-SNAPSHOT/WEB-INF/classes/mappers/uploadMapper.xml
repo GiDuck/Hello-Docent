@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.uploadMapper">
+
+
+<insert id="insertTempImageUrl" parameterType="ResourceDTO">
+
+
+insert into tbl_tempResource values (#{res_ref}, #{res_type}, #{res_url}, #{res_date})
+
+</insert>
+
+<delete id="deleteTempImageUrl" parameterType="String">
+
+delete from tbl_tempResource where temp_url = #{keyword} 
+
+</delete>
+
+<insert id="insertCommentrary" parameterType="CommentaryDTO">
+
+insert into tbl_commentray values (
+<![CDATA[
+#{CMT_ID},          
+#{CMT_REF},         
+#{CMT_WRITERUID},   
+#{CMT_TITLE}, 
+#{CMT_INTRODUCE, jdbcType=VARCHAR},   
+#{CMT_ISFREE, jdbcType=VARCHAR},      
+#{CMT_CONTENTTYPE}, 
+#{CMT_DATE},        
+#{CMT_CONTENT}     
+]]>
+
+)
+
+
+
+</insert>
+
+
+<!-- 태그 insert -->
+
+
+<insert id="insertTags" parameterType="map">
+
+insert into tbl_cmtTags values (#{tag_ref}, #{tag_name})
+
+</insert>
+
+
+
+<!-- 도슨트 해설 리소스 insert -->
+
+<insert id="insertComResource" parameterType="ResourceDTO">
+
+
+<foreach collection="list" item="item" open="insert all " close="select * from dual" separator=" ">
+
+into tbl_cmtResources values (#{item.res_ref},#{item.res_type},#{item.res_url}, #{res_date})
+
+</foreach>   
+
+
+</insert>
+
+
+
+
+<!-- 도슨트 해설 가격 정보 insert -->
+
+<insert id="insertCostInfo" parameterType="map">
+
+insert into tbl_cmtPrice values(#{id}, #{price})
+
+
+</insert>
+
+
+
+<!-- 임시 리소스 테이블 검색 -->
+
+<select id="selectTempResource" parameterType="String" resultType="String">
+
+select temp_url from tbl_tempResource where temp_id = #{id}
+
+</select>
+
+<!-- 임시 리스소 테이블 삭제 -->
+
+<delete id="deleteTempResource" parameterType="String">
+
+delete from tbl_tempResource where temp_id = #{id} 
+
+</delete>
+
+<!-- 블로그 리소스 삭제 -->
+
+<delete id ="deleteComResource" parameterType="String">
+
+delete from tbl_cmtResource where cmtrs_ref = #{id}
+
+</delete>
+
+
+<!-- 해설 대표 이미지 가져오기 -->
+
+<select id="selectImageResource" parameterType="String" resultType="String">
+
+select CMTRS_URL from TBL_CMTRESOURCES where CMTRS_REF = #{id} and CMTRS_TYPE = <![CDATA['image']]>
+and ROWNUM <![CDATA[<]]> 2
+
+
+
+</select>
+
+
+
+
+
+
+
+
+
+</mapper>

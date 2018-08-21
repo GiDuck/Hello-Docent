@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.commentaryMapper">
+
+
+
+<!-- 도슨트 해설  select -->
+
+
+<select id="getCommentary" parameterType="String" resultType="CommentaryDTO">
+
+
+select * from tbl_commentray where cmt_id = #{id}
+
+
+</select>
+
+<select id="getCommentaryByDisplayId" parameterType="String" resultType="CommentaryDTO">
+
+
+select CMT_ID, CMT_REF, CMT_WRITERUID, CMT_TITLE, CMT_INTRODUCE, CMT_ISFREE, CMT_CONTENTTYPE, CMT_DATE 
+from tbl_commentray where cmt_ref = #{id}
+
+
+</select>
+
+<select id="getMyCommentary" parameterType="map" resultType="map">
+
+
+select cmt_id, cmt_title_ cmt_isfree_ cmt_contentType, cmt_date  from tbl_commentray where cmt_id = #{id}
+
+
+</select>
+
+
+
+
+<delete id="removeCommentary" parameterType="String">
+
+delete from tbl_commentray where cmt_id = #{id}
+
+</delete>
+
+<update id="updateCommentray" parameterType="CommentaryDTO">
+
+update tbl_commentray set CMT_TITLE = #{CMT_TITLE}, 
+CMT_INTRODUCE = #{CMT_INTRODUCE,jdbcType=VARCHAR}, 
+CMT_ISFREE = #{CMT_ISFREE},
+CMT_CONTENTTYPE = #{CMT_CONTENTTYPE}, 
+CMT_CONTENT = #{CMT_CONTENT}
+where CMT_ID = #{CMT_ID}
+
+</update>
+
+<select id="getCommentaryTags" parameterType="String" resultType="String">
+
+select CMTT_NAME from TBL_CMTTAGS where CMTT_REF = #{id}
+
+</select>
+
+
+<select id="getCommentaryCostInfo" parameterType="String" resultType="String">
+
+select CMTP_CREDIT from TBL_CMTPRICE where CMTP_REF = #{id}
+
+
+</select>
+
+<delete id="removeCommentaryTags" parameterType="String">
+
+delete from TBL_CMTTAGS where CMTT_REF = #{id}
+
+</delete>
+
+<update id="updateCommentaryCost" parameterType="map">
+
+update TBL_CMTPRICE set CMTP_CREDIT = #{price} where CMTP_REF = #{id}
+
+</update>
+
+
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.blogMapper">
+
+<!-- 블로그 포스팅 insert -->
+<insert id="insertBlog" parameterType="BlogDTO">
+
+insert into tbl_column values (
+
+<![CDATA[
+#{col_id},          
+#{col_writeruid},         
+#{col_title},
+#{col_introduce, jdbcType=VARCHAR},   
+#{col_date}, 
+#{col_type},        
+#{col_content}  
+]]>
+
+)
+
+
+</insert>
+
+<!-- 블로그 태그 insert -->
+
+<insert id="insertBlogTags" parameterType="map">
+
+insert into tbl_coltags values (#{tag_ref}, #{tag_name})
+
+</insert>
+
+
+<!-- 블로그 insert -->
+
+<insert id="insertBlogResource" parameterType="list">
+
+
+<foreach collection="list" item="item" open="insert all " close="select * from dual" separator=" ">
+
+into tbl_colResources values (#{item.res_ref},#{item.res_type},#{item.res_url}, #{item.res_date})
+
+</foreach>   
+
+
+</insert>
+
+
+
+<!-- 블로그 update -->
+
+
+<update id="updateBlog" parameterType="BlogDTO">
+
+update tbl_column set col_title = #{col_title}, 
+col_introduce = #{col_introduce, jdbcType=VARCHAR}, 
+col_type = #{col_type}, 
+col_content = #{col_content}
+where col_id = #{col_id}
+
+</update>
+
+
+
+<!-- 블로그 포스팅 select -->
+
+<select id="getBlog" parameterType="String" resultType="BlogDTO">
+
+select * from tbl_column where col_id = #{id}
+
+</select>
+
+
+<!-- 블로그 포스팅 select -->
+
+<select id="getBlogList" parameterType="map" resultType="map">
+
+<![CDATA[
+select * from tbl_column where rownum > #{prefix} and rownum <= #{suffix} 
+]]>
+
+
+<if test="keyword != null and test= !keyword.equals('')"> and col_title LIKE '%'|| #{keyword} ||'%' </if>
+
+</select>
+
+
+<select id="getMyBlog" parameterType="map" resultType="map">
+
+<![CDATA[
+select col_title, col_date, col_type from tbl_column where rownum > #{prefix} and rownum <= #{suffix} and col_writeruid = #{id}
+]]>
+
+</select>
+
+
+
+<!-- 블로그 총 개수 가져오기 -->
+
+<select id="getBlogLength" parameterType="map" resultType="String">
+
+select count(*) from tbl_column
+
+
+<if test="keyword != null and test= !keyword.equals('')"> where col_title LIKE '%'|| #{keyword} ||'%' </if>
+
+
+
+</select>
+
+
+
+<!-- 블로그 태그 가져오기 -->
+
+<select id="getBlogTags" parameterType="String" resultType="String">
+
+select COLT_NAME from TBL_COLTAGS where COLT_REF = #{id}
+
+</select>
+
+
+
+<!-- 블로그 태그 삭제 -->
+
+<delete id="removeBlogTags" parameterType="String">
+
+delete from TBL_COLTAGS where COLT_REF = #{id}
+
+</delete>
+
+
+<!-- 블로그 포스팅 삭제 -->
+
+
+<delete id="removeBlog" parameterType="String">
+
+delete from tbl_column where col_id = #{id}
+
+</delete>
+
+
+<!-- 블로그 리소스 삭제 -->
+
+<delete id ="removeBlogResource" parameterType="String">
+
+delete from TBL_COLRESOURCES where COLRS_REF = #{id}
+
+</delete>
+
+
+<!-- 블로그 대표 이미지 가져오기 -->
+
+<select id="selectBlogImageResource" parameterType="String" resultType="String">
+
+
+select COLRS_URL from TBL_COLRESOURCES where COLRS_REF = #{id} and COLRS_TYPE = <![CDATA['image']]>
+and ROWNUM <![CDATA[<]]> 2
+
+</select>
+
+
+
+
+
+
+
+
+</mapper>
