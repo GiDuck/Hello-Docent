@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.museumMapper">
+
+
+	<insert id="putMuseum">
+
+
+		insert into tbl_exPlace values (#{ep_id}, #{ep_name},
+		#{ep_type},
+		#{ep_subType}, #{ep_operTimeStart, jdbcType=VARCHAR},
+		#{ep_operTimeEnd, jdbcType=VARCHAR},
+		#{ep_operTimeWKStart,
+		jdbcType=VARCHAR}, #{ep_operTimeWKEnd, jdbcType=VARCHAR},
+		#{ep_closeInfo, jdbcType=VARCHAR}, #{ep_facilities, jdbcType=VARCHAR},
+		#{ep_phone, jdbcType=VARCHAR},
+		#{ep_traffic, jdbcType=VARCHAR},
+		#{ep_url, jdbcType=VARCHAR}, #{ep_introduce,
+		jdbcType=VARCHAR})
+
+	</insert>
+
+	<insert id="putMuseumCost">
+
+		insert into tbl_exPlaceCost values
+		(#{epc_id},
+		#{epc_adult, jdbcType=VARCHAR}, #{epc_teenager, jdbcType=VARCHAR},
+		#{epc_child, jdbcType=VARCHAR}, #{epc_etc, jdbcType=VARCHAR})
+
+	</insert>
+
+	<insert id="putMuseumLocation">
+		insert into tbl_exPlaceLocation values (#{epl_id},
+		#{epl_address,
+		jdbcType=VARCHAR}, #{epl_token}, #{epl_locationX},
+		#{epl_locationY},
+		#{epl_addressRoad})
+
+
+	</insert>
+
+
+	<insert id="putMuseumEvent">
+
+		insert into tbl_disEvent values (#{de_ref}, #{de_uci,
+		jdbcType=VARCHAR},
+		#{de_title, jdbcType=VARCHAR}, #{de_image,
+		jdbcType=VARCHAR},
+		#{de_person, jdbcType=VARCHAR}, #{de_subCategory,
+		jdbcType=VARCHAR},
+		#{de_url}, #{de_venue, jdbcType=VARCHAR},
+		#{de_category,
+		jdbcType=VARCHAR},#{de_startDate, jdbcType=DATE},
+		#{de_endDate,
+		jdbcType=DATE})
+
+	</insert>
+
+	<insert id="putMuseumCode">
+
+		insert into tbl_mc values (#{mc_ref}, #{mc_code,
+		jdbcType=VARCHAR},
+		#{mc_parentCode, jdbcType=VARCHAR}, #{mc_name,
+		jdbcType=VARCHAR})
+
+
+	</insert>
+
+	<select id="selectMuseumKey" parameterType="String"
+		resultType="String">
+
+		select ep_id from tbl_explace where ep_name=#{name}
+
+	</select>
+
+	<select id="getMuseumEvents" resultType="MuseumEventDTO">
+ 
+ <![CDATA[
+select  DE_REF, DE_UCI, DE_TITLE, DE_IMAGE, DE_PERSON, DE_SUBCATEGORY, DE_URL, DE_VENUE, DE_CATEGORY,
+DE_STARTDATE, DE_ENDDATE, EP_NAME as de_refname from tbl_disevent event, tbl_explace explace where event.de_ref = explace.ep_id and 
+event.de_enddate > (select sysdate from dual) ]]>
+
+
+	</select>
+
+	<select id="getMuseumEventsLimit" resultType="MuseumEventDTO">
+ 
+ <![CDATA[
+ 
+select  DE_REF, DE_UCI, DE_TITLE, DE_IMAGE, DE_PERSON, DE_SUBCATEGORY, DE_URL, DE_VENUE, DE_CATEGORY,
+DE_STARTDATE, DE_ENDDATE, EP_NAME as de_refname from tbl_disevent event, tbl_explace explace where event.de_ref = explace.ep_id and 
+event.de_enddate > (select sysdate from dual) and rownum <= 20
+ ]]>
+
+
+	</select>
+
+
+	<!-- param 1. keyword 2. type 3. placeName 4. date -->
+
+	<select id="getMuseumEventsQuery" resultType="MuseumEventDTO"
+		parameterType="map">
+
+
+		select DE_REF, DE_UCI, DE_TITLE, DE_IMAGE, DE_PERSON, DE_SUBCATEGORY,
+		DE_URL, DE_VENUE, DE_CATEGORY,
+		DE_STARTDATE, DE_ENDDATE, EP_NAME as
+		de_refname
+		from tbl_disevent event, tbl_explace explace where
+		event.de_ref=
+		explace.ep_id and event.de_enddate  <![CDATA[>]]>
+		(select to_date (#{date}) sys_date from dual)
+		and event.de_category
+		LIKE '%'||#{type}||'%' and explace.ep_name LIKE
+		'%'||#{placeName}||'%'
+
+
+
+		<if test="keyword != null and keyword != '' ">
+
+			and event.de_title LIKE '%'||#{keyword}||'%' or
+			event.de_person LIKE
+			'%'||#{keyword}||'%'
+		</if>
+
+	</select>
+
+
+
+
+	<select id="getMuseumType" resultType="String"
+		parameterType="String">
+
+		select ep_subtype from tbl_explace where ep_id = #{id}
+
+	</select>
+
+	<select id="getMuseumLocalList" resultType="String">
+
+		select distinct
+		epl_token from tbl_explacelocation where epl_token != '0'
+		order by
+		epl_token ASC
+
+
+	</select>
+
+	<select id="getMuseumPlaceList" resultType="String"
+		parameterType="String">
+ 
+  <![CDATA[
+ select ep_name from TBL_EXPLACE where ep_id in (select epl_id from TBL_EXPLACELOCATION where epl_token = #{name}) order by ep_name asc
+  ]]>
+
+	</select>
+
+	<select id="getMuseumPlaceFullList" resultType="map"
+		parameterType="map">
+
+
+		select distinct ep_id, ep_name, ep_type, ep_subtype, epl_addressroad
+		from
+		tbl_explace, tbl_explacelocation
+		where tbl_explace.ep_id =
+		tbl_explacelocation.epl_id
+
+		<choose>
+			<when test="token.equals('location')">
+				and epl_token LIKE '%'||#{keyword}||'%'
+			</when>
+
+			<when test="token.equals('search')">
+				and (ep_name LIKE '%'||#{keyword}||'%'
+				or epl_addressroad LIKE '%'||#{keyword}||'%')
+			</when>
+
+			<when test="token.equals('id')">
+				and ep_id LIKE '%'||#{keyword}||'%'
+			</when>
+
+
+		</choose>
+
+		order by ep_name ASC
+
+	</select>
+
+	<select id="getMuseumPlaceFullListByIds" resultType="map"
+		parameterType="String">
+
+
+		select distinct ep_id, ep_name, ep_type, ep_subtype, epl_addressroad
+		from
+		tbl_explace, tbl_explacelocation
+		where tbl_explace.ep_id =
+		tbl_explacelocation.epl_id
+		and ep_id in
+		<foreach item="item" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+
+
+	</select>
+
+	<select id="selectGeoLocation" parameterType="map"
+		resultType="map">
+
+		select epl_locationX as lat, epl_locationY as lng, epl_addressroad as
+		address, ep_name as name, ep_id as id
+		from tbl_explace, tbl_explaceLocation
+		where tbl_explace.ep_id =
+		tbl_explaceLocation.epl_id
+
+		<choose>
+
+			<when test="token.equals('none')">
+				and (ep_name LIKE '%'||#{keyword}||'%'
+				or epl_addressroad LIKE '%'||#{keyword}||'%')
+			</when>
+
+			<when test="token.equals('location')">
+				and epl_token LIKE '%'||#{keyword}||'%'
+			</when>
+
+			<when test="token.equals('search')">
+				and (ep_name LIKE '%'||#{keyword}||'%'
+				or epl_addressroad LIKE '%'||#{keyword}||'%')
+			</when>
+
+			<when test="token.equals('id')">
+				and ep_id LIKE '%'||#{keyword}||'%'
+			</when>
+
+		</choose>
+		
+		order by epl_locationX ASC
+
+	</select>
+
+
+	<select id="getMuseumDetailInfo" parameterType="String"
+		resultType="map">
+
+
+		select * from tbl_explace, tbl_explacecost, tbl_explacelocation
+		where tbl_explace.ep_id = tbl_explacelocation.epl_id and tbl_explace.ep_id
+		= tbl_explacecost.epc_id
+		and ep_id = #{id}
+
+	</select>
+
+
+
+
+	<!-- <insert id="setDisplay" parameterType="DisplayDTO"> insert into tbl_display 
+		values (#{dp_id}, #{dp_name}, #{dp_type, jdbcType=VARCHAR}, #{dp_exp}, #{dp_uci, 
+		jdbcType=VARCHAR}) </insert> <insert id="setDisplayInfo" parameterType="DisplayInfoDTO"> 
+		insert into tbl_displayInfo values (#{dpl_id}, #{dpl_alternativeTitle, jdbcType=VARCHAR}, 
+		#{dpl_description, jdbcType=VARCHAR}, #{dpl_url, jdbcType=VARCHAR},#{dpl_imageUrl, 
+		jdbcType=VARCHAR}, #{dpl_publisher, jdbcType=VARCHAR}, #{dpl_temporal, jdbcType=VARCHAR}, 
+		#{dpl_medium, jdbcType=VARCHAR}, #{dpl_extent, jdbcType=VARCHAR}) </insert> -->
+
+	<!-- <insert id="setDisplay" parameterType="java.lang.List"> 
+	
+	<foreach collection="list" 
+		item="display" separator=" " open="insert all" close="select * from dual"> 
+		
+		
+		into tbl_display values (#{display.dp_id}, #{display.dp_name, jdbcType=VARCHAR}, 
+		#{display.dp_type, jdbcType=VARCHAR}, #{display.dp_exp}, #{display.dp_uci, 
+		jdbcType=VARCHAR}) 
+		
+		</foreach>
+		
+		 </insert>
+		 
+		  <insert id="setDisplayInfo" parameterType="java.lang.List" 
+		> <foreach collection="list" item="info" separator=" " open="insert all" 
+		close="select * from dual"> into tbl_displayInfo values (#{info.dpl_id}, 
+		#{info.dpl_alternativeTitle, jdbcType=VARCHAR}, #{info.dpl_description, jdbcType=VARCHAR}, 
+		#{info.dpl_url, jdbcType=VARCHAR},#{info.dpl_imageUrl, jdbcType=VARCHAR}, 
+		#{info.dpl_publisher, jdbcType=VARCHAR}, #{info.dpl_temporal, jdbcType=VARCHAR}, 
+		#{info.dpl_medium, jdbcType=VARCHAR}, #{info.dpl_extent, jdbcType=VARCHAR}) 
+		</foreach> </insert> -->
+
+
+
+</mapper>
+        
+        
+        
