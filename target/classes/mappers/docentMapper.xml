@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.docentMapper">
+
+<update id="docentInfoUpdate" parameterType="DocentInfoDTO">
+
+update tbl_docentInfo set DI_CARRER = #{di_carrer}, DI_INTRODUCE = #{di_introduce} where DI_IUID = #{di_iuid}
+
+</update>
+
+<select id="getDocentInfo" parameterType="String" resultType="DocentInfoDTO">
+
+select * from tbl_docentInfo where di_iuid = #{id}
+
+
+</select>
+
+
+
+
+
+
+
+</mapper>

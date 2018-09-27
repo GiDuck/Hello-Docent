@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spov.hellodocent.mappers.managerMapper">
+
+<select id="getRequestDocentList" resultType="RequestDocentDTO">
+
+select * from tbl_requestDocent
+
+</select>
+
+<select id="getRequestDocentOne" resultType="RequestDocentDTO" parameterType="String">
+
+select * from tbl_requestDocent where req_id = #{req_id}
+
+</select>
+
+<delete id="removeRequestDocent" parameterType="String">
+
+delete from TBL_REQUESTDOCENT where req_id = #{req_id}
+
+</delete>
+
+<update id="updateIsDocent" parameterType="String">
+
+update tbl_member set user_isDocent = '3kSnGRCjiLX7T8Q71TbjBA==' where user_iuid = #{uid}  
+
+</update>
+
+<insert id="insertDocentInfo">
+
+insert into tbl_docentInfo values(#{di_iuid}, #{di_carrer}, #{di_introduce}, #{di_vertifiedTime}, #{di_certificationPath, jdbcType=VARCHAR}) 
+
+</insert>
+
+
+<update id="updateDocentInfo">
+
+update tbl_docentInfo set di_introduce = #{di_introduce}, di_carrer = #{di_carrer}
+
+</update>
+
+
+
+
+
+</mapper>

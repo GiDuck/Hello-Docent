@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC 
+    "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" 
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition name="basic"
+		template="/WEB-INF/tiles/layouts/basic.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/components/header.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/tiles/components/footer.jsp" />
+	</definition>
+	
+
+	<definition name="*/*" extends="basic">
+		<put-attribute name="content"
+			value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+	
+
+	<definition name="empty"
+		template="/WEB-INF/tiles/layouts/empty.jsp">
+		<put-attribute name="nocontent" value="" />
+	</definition>
+
+
+	<definition name="empty/*/*" extends="empty">
+		<put-attribute name="nocontent"
+			value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+
+	</definition>
+
+		<definition name="nofooter"
+		template="/WEB-INF/tiles/layouts/noFooter.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/tiles/components/header.jsp" />
+	</definition>
+
+	<definition name="*/nf/*" extends="nofooter">
+		<put-attribute name="content"
+			value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+	</definition>
+
+
+</tiles-definitions>
