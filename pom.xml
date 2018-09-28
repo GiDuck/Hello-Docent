@@ -366,6 +366,8 @@
 					<url>http://www.hellodocent.net/manager/text</url>
                     <server>HelloDocent</server>
                     <path>/</path>
+                   <username>admin</username>
+         		   <password>admin</password>
 				</configuration>
 			</plugin>
 			<plugin>
