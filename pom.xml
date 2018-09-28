@@ -379,9 +379,9 @@
                   </build>
 
 
-         <dependencies>
+         <!-- <dependencies>
 
-                        <!-- Servlet -->
+                        Servlet
 
                         <dependency>
 
@@ -409,7 +409,7 @@
 
                         </dependency>
 
-                  </dependencies>
+                  </dependencies> -->
 
 
                 
