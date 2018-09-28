@@ -365,7 +365,7 @@
 					<showDeprecation>true</showDeprecation>
 					<url>http://www.hellodocent.net/manager/text</url>
                     <server>HelloDocent</server>
-                    <path>/HelloDocent</path>
+                    <path>/</path>
                    <username>admin</username>
          		   <password>admin</password>
 				</configuration>
