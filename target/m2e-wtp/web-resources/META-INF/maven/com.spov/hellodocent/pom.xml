@@ -328,7 +328,7 @@
 	</dependencies>
 	<build>
 
-
+	<finalName>ROOT</finalName>
 	<defaultGoal>install</defaultGoal>
 
 		<plugins>
@@ -371,7 +371,6 @@
 					<url>http://localhost:8080/manager/text</url>
 
                              <path>/</path>
-
                              <username>admin</username>
                              <password>admin</password>
 
