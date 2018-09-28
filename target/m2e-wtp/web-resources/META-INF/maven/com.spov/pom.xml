@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.spov</groupId>
-	<artifactId>hellodocent</artifactId>
+	<artifactId></artifactId>
 	<name>HelloDocent</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
@@ -353,9 +353,6 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					  <fork>true</fork>
-			          <meminitial>512m</meminitial>
-			          <maxmem>1048m</maxmem>
 					<compilerArgument>-Xlint:all</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>

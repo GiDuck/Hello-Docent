@@ -353,6 +353,9 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					  <fork>true</fork>
+			          <meminitial>512m</meminitial>
+			          <maxmem>1048m</maxmem>
 					<compilerArgument>-Xlint:all</compilerArgument>
 					<showWarnings>true</showWarnings>
 					<showDeprecation>true</showDeprecation>
