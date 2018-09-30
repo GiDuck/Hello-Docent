@@ -25,16 +25,11 @@
 	
 	<repositories>
   <!-- 추가  Libs -->
-    <repository>
-      <id>in-project</id>
-      <name>custom jars</name>
-      <url>file://${project.basedir}/lib</url>
-    </repository>
-    
+
     <repository> 
     <id>in-project-jenkins</id> 
     <name>custom jars-jenkins</name> 
-    <url>file://${user.dir}/lib</url>
+    <url>file://.m2/repository</url>
      </repository>
 
     
