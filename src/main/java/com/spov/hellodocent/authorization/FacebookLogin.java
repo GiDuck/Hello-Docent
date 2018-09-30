@@ -1,6 +1,5 @@
 package com.spov.hellodocent.authorization;
 
-import org.apache.log4j.Logger;
 import org.springframework.social.MissingAuthorizationException;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.facebook.api.Facebook;
@@ -18,8 +17,6 @@ import com.spov.hellodocent.encrypto.EncryptoMember;
 import com.spov.hellodocent.tools.UidMaker;
 
 public class FacebookLogin implements OAuthLogin {
-
-	private static Logger logger = Logger.getLogger(FacebookLogin.class);
 	
 	// 페이스북 oAuth 관련
 	private FacebookConnectionFactory facebookConnectionFactory;
