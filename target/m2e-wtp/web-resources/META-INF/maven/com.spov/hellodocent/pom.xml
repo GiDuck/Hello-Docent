@@ -23,24 +23,7 @@
 	</properties>
 
 	
-	<repositories>
-  <!-- 추가  Libs -->
 
-    <repository> 
-    <id>in-project-jenkins</id> 
-    <name>custom jars-jenkins</name> 
-    <url>file://${project.basedir}/lib</url>
-     </repository>
-
-
-	<repository>
-		<id>jenkins-repo</id>
-		<name>jenkins Repository</name>
-		<url>file://${user.dir}/lib</url>
-	</repository>
-    
-    
- </repositories>
 
 	<dependencies>
 		<!-- Spring -->
