@@ -34,7 +34,7 @@
 <repository>
  <id>in-project-jenkins</id>
  <name>custom jars-jenkins</name>
-  <url>file://${JENKINS_HOME}/.m2/repository</url>
+  <url>file://${JENKINS_HOME}/.m2/repository/</url>
    </repository>
 
 
