@@ -28,7 +28,7 @@
     <repository>
       <id>in-project</id>
       <name>custom jars</name>
-      <url>file://${project.basedir}/lib</url>
+      <url>file:///.m2/repository</url>
     </repository>
     
 <repository>
