@@ -21,6 +21,17 @@
 		<org.apache.tiles-version>3.0.5</org.apache.tiles-version>
 		<org.springframework.security-version>3.2.8.RELEASE</org.springframework.security-version>
 	</properties>
+
+	
+	<repositories>
+  <!-- 추가  Libs -->
+    <repository>
+      <id>in-project</id>
+      <name>custom jars</name>
+      <url>file://${project.basedir}/libs</url>
+    </repository>
+ </repositories>
+
 	
 
 

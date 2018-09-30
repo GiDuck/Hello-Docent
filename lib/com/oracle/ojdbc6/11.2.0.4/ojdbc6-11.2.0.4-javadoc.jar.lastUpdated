@@ -1,0 +1,12 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Sun Sep 30 20:46:20 KST 2018
+@default-in-project-jenkins-file\://C\:\\WINDOWS\\system32/lib/.lastUpdated=1538307980453
+file\://${JENKINS_HOME}/jobs/${JOB_NAME}/workspace/lib/.lastUpdated=1538307550618
+file\://C\:\\Users\\gdtbg\\git\\HelloDocent/lib/.lastUpdated=1538307980426
+file\://C\:\\WINDOWS\\system32/lib/.error=Could not transfer artifact com.oracle\:ojdbc6\:jar\:javadoc\:11.2.0.4 from/to in-project-jenkins (file\://C\:\\WINDOWS\\system32/lib)\: Repository path C\:\\WINDOWS\\system32\\lib does not exist, and cannot be created.
+https\://code.lds.org/nexus/content/groups/main-repo/.error=
+file\://C\:\\Users\\gdtbg\\git\\HelloDocent/lib/.error=
+https\://repo.maven.apache.org/maven2/.lastUpdated=1535961305677
+https\://repo.maven.apache.org/maven2/.error=
+https\://code.lds.org/nexus/content/groups/main-repo/.lastUpdated=1536492277909
+file\://${JENKINS_HOME}/jobs/${JOB_NAME}/workspace/lib/.error=
