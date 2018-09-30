@@ -328,7 +328,6 @@
 	</dependencies>
 	<build>
 
-	<finalName>ROOT</finalName>
 	<defaultGoal>install</defaultGoal>
 
 		<plugins>
