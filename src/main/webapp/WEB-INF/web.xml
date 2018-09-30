@@ -38,69 +38,69 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	
+
 	<!-- encoding filter -->
-	
+
 	<filter>
-    <filter-name>characterEncodingFilter</filter-name>
-    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-    <init-param>
-        <param-name>encoding</param-name>
-        <param-value>utf-8</param-value>
-    </init-param>
-    <init-param>
-        <param-name>forceEncoding</param-name>
-        <param-value>true</param-value>
-    </init-param>
-</filter>
-<filter-mapping>
-    <filter-name>characterEncodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-</filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 
- <error-page>
+	<error-page>
 
-    <exception-type>java.lang.Throwable</exception-type>
+		<exception-type>java.lang.Throwable</exception-type>
 
-    <location>/WEB-INF/views/error/error.jsp</location>
+		<location>/WEB-INF/views/error/error.jsp</location>
 
-</error-page>
+	</error-page>
 
-<error-page>
+	<error-page>
 
-    <error-code>404</error-code>
+		<error-code>404</error-code>
 
-    <location>/WEB-INF/views/error/404.jsp</location>
+		<location>/WEB-INF/views/error/404.jsp</location>
 
-</error-page>
+	</error-page>
 
-<error-page>
+	<error-page>
 
-    <error-code>400</error-code>
+		<error-code>400</error-code>
 
-    <location>/WEB-INF/views/error/400.jsp</location>
+		<location>/WEB-INF/views/error/400.jsp</location>
 
-</error-page>
-
-
-<error-page>
-
-    <error-code>415</error-code>
-
-    <location>/WEB-INF/views/error/400.jsp</location>
-
-</error-page>
+	</error-page>
 
 
+	<error-page>
 
- <error-page>
+		<error-code>415</error-code>
 
-    <error-code>500</error-code>
+		<location>/WEB-INF/views/error/400.jsp</location>
 
-    <location>/WEB-INF/views/error/500.jsp</location>
+	</error-page>
 
-</error-page> 
+
+
+	<error-page>
+
+		<error-code>500</error-code>
+
+		<location>/WEB-INF/views/error/500.jsp</location>
+
+	</error-page>
 
 
 
