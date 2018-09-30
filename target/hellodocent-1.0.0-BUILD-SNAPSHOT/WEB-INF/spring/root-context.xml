@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+<!-- 	<context:component-scan
+		base-package="com.spov.hellodocent.persistence" />
+
+	<context:component-scan
+		base-package="com.spov.hellodocent.service" />
+ -->
+
+	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+
+
+	<context:component-scan
+		base-package="com.spov.hellodocent" use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Service" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Repository" />
+			<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Component" />
+
+
+	</context:component-scan>
+	
+
+
+
+	<!-- Google 소셜 로그인 연결 설정 -->
+	<bean id="googleConnectionFactory"
+		class="org.springframework.social.google.connect.GoogleConnectionFactory">
+		<constructor-arg
+			value="179457142718-sh6kmcv4cevjvq21r32mpukflnun637p.apps.googleusercontent.com" />
+		<constructor-arg value="iwBVyjzoG61441EVe1VQygBh" />
+	</bean>
+
+	<bean id="googleOAuth2Parameters"
+		class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope"
+			value="https://www.googleapis.com/auth/plus.login" />
+		<property name="redirectUri"
+			value="http://ec2-52-79-251-26.ap-northeast-2.compute.amazonaws.com:8080/member/googleSignInCallback" />
+
+	</bean>
+
+	 <!-- Facebook 소셜 로그인 연결 설정 -->
+
+	<bean id="facebookConnectionFactory"
+		class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
+		<constructor-arg value="496531960766784" />
+		<constructor-arg
+			value="15134eafa6d4fc48a421559be22559ec" />
+	</bean>
+
+	<bean id="facebookOAuth2Parameters"
+		class="org.springframework.social.oauth2.OAuth2Parameters">
+		<property name="scope" value="email" />
+		<property name="redirectUri"
+			value="https://localhost:8443/member/facebookSignInCallback" />
+	</bean>
+
+
+	<!-- Kakao 로그인 설정 -->
+
+	<bean id="kakaoLogin"
+		class="com.spov.hellodocent.authorization.KakaoLogin">
+		<property name="client_id"
+			value="7a4b4528fefc962b75ad9f654ef7b768" />
+		<property name="secret_code"
+			value="xmjk5AENnUo0sXRxGKXVKlzZeBfsR68V" />
+		<property name="scope" value="email" />
+		<property name="redirectUri"
+			value="http://ec2-52-79-251-26.ap-northeast-2.compute.amazonaws.com:8080/member/kakaoSignInCallback" />
+		<property name="kakao_based_Uri"
+			value="https://kauth.kakao.com" />
+
+	</bean>
+
+
+	<!-- Naver 로그인 설정 -->
+
+
+	<bean id="naverLogin"
+		class="com.spov.hellodocent.authorization.NaverLogin">
+		<property name="client_id" value="euaVq3Erc2IpHdLRqPEJ" />
+		<property name="secret_code" value="97xsZGE1Nz" />
+		<property name="scope" value="email" />
+		<property name="redirectUri"
+			value="http://ec2-52-79-251-26.ap-northeast-2.compute.amazonaws.com:8080/member/naverSignInCallback" />
+		<property name="naver_based_Uri"
+			value="https://nid.naver.com/oauth2.0" />
+		<property name="naver_request_profile_Uri"
+			value="https://openapi.naver.com/v1/nid/me" />
+	</bean>
+
+
+	<bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="dataSource">
+		<property value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"
+			name="driverClassName" />
+		<property
+			value="jdbc:log4jdbc:oracle:thin:@gdtbgl93.czhonby3ufkr.ap-northeast-2.rds.amazonaws.com:1521:ORCL" name="url" />
+		<property value="gdtbgl93" name="username" />
+		<property value="godqhrgkek93" name="password" />
+	</bean>
+	
+	<!-- jdbc:log4jdbc:oracle:thin:@localhost:1521:XE -->
+	
+	
+		<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<property name="dataSource" ref="dataSource"/> </bean>
+	
+
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean"
+		id="SqlSessionFactory">
+		<property name="dataSource" ref="dataSource" />
+		<property value="classpath:mybatis-config.xml"
+			name="configLocation" />
+		<property value="classpath:/mappers/**/*Mapper.xml"
+			name="mapperLocations" />
+	</bean>
+	
+
+
+	<bean class="org.mybatis.spring.SqlSessionTemplate"
+		id="sqlSession" destroy-method="clearCache">
+		<constructor-arg index="0" ref="SqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH"/>
+		
+	</bean>
+
+	<!-- name="sqlSessionFactory" -->
+
+
+
+	<bean id="sessionContextFactory"
+		class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+		<property name="targetBeanName" value="sessionContext" />
+	</bean>
+
+
+	<bean id="uploadPath" class="java.lang.String">
+	
+<constructor-arg value="/var/lib/tomcat8/resource/upload/img"></constructor-arg>
+
+<!-- C:\\Users\\gdtbg\\hellodocent\\resource\\upload\\img
+ -->	</bean>
+
+
+ 
+<bean id="jacksonMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
+
+
+
+
+</beans>
