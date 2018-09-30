@@ -23,7 +23,24 @@
 	</properties>
 
 	
+	<repositories>
+  <!-- 추가  Libs -->
+    <repository>
+      <id>in-project</id>
+      <name>custom jars</name>
+      <url>file://${project.basedir}/lib</url>
+    </repository>
+    
+<repository>
+ <id>in-project-jenkins</id>
+ <name>custom jars-jenkins</name>
+  <url>file://${JENKINS_HOME}/jobs/${JOB_NAME}/workspace/lib</url>
+   </repository>
 
+
+    
+    
+ </repositories>
 
 	<dependencies>
 		<!-- Spring -->
