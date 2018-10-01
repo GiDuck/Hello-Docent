@@ -71,14 +71,7 @@
 	</beans:bean>
 	
 	<beans:bean id="loginInterceptor" class="com.spov.hellodocent.conf.LoginInterceptor"></beans:bean>
-	
-	<!-- <interceptors>
-	<interceptor>
-	<mapping path="/member/join"/>
-	<beans:ref bean="loginInterceptor"/>
-	</interceptor>
-	
-	</interceptors> -->
+
 	
 	
 
