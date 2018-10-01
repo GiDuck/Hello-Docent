@@ -166,7 +166,7 @@
 
 	<bean id="uploadPath" class="java.lang.String">
 	
-<constructor-arg value="C:\\Users\\gdtbg\\hellodocent\\resource\\upload\\img"></constructor-arg>
+<constructor-arg value="/var/lib/tomcat8/resource/upload/img"></constructor-arg>
  
  </bean>
 
