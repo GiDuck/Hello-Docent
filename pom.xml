@@ -24,6 +24,15 @@
 
 	
 	<repositories>
+	
+	
+	<repository> 
+	<id>in-project</id> 
+	<name>custom jars</name> 
+	<url>file://${project.basedir}/lib</url> 
+	</repository>
+
+	
 
 	<repository>
 	 <id>in-project-jenkins</id>
