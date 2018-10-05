@@ -27,12 +27,12 @@
         <div class="row" style="margin:20px">
         
         <div class="col-9">      
-        <input id="searchBtn" class="form-control form-control-lg w-100" placeHolder ="검색어를 입력하세요..." style="margin:0 auto"/>
+        <input id="searchInput" class="form-control form-control-lg w-100" placeHolder ="검색어를 입력하세요..." style="margin:0 auto"/>
         </div>
         
         <div class="col-3">
         
-        <button class="btn btn-lg w-100" style="margin:0 auto">검색하기</button>
+        <button id="searchBtn" class="btn btn-lg w-100" style="margin:0 auto">검색하기</button>
         
         </div>
         </div>
@@ -225,10 +225,11 @@
     
     <script>
     
+
     
 	$(document).ready(() => {
 	
-		$("#searchBtn").on('keydown', (event) => {
+		$("#searchInput").on('keydown', (event) => {
 			
 			if(event.keyCode == '13'){
 				clickSearch();
@@ -238,6 +239,16 @@
 		
 			
 		});
+		
+		
+		$("#searchBtn").on('click', ()=>{
+			
+			
+			clickSearch();
+			
+		});
+		
+		
 
 	});
 
