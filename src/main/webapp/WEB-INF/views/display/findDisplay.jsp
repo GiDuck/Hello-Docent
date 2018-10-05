@@ -232,6 +232,8 @@
 			
 			if(event.keyCode == '13'){
 				clickSearch();
+				event.preventDefault();
+				
 			}
 		
 			
