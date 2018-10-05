@@ -41,13 +41,14 @@
  		 var items = new Array();
   		</script>
         
+          <div class="row">
         <c:forEach items="${blogs}" var="blog" >
         
         <script> items.push("${blog.COL_ID}"); </script>
         
-        <div class="row">
+      
           <div id="blogBody" class="article col-12 w-100 text-center" style="margin:0 auto;">
-            <div class="row">
+            <div class="row w-100">
               <div class="col-12">
                 <div class="card card-blog card-plain text-center w-100">
                   <div id="blogImage" class="card-image">
@@ -72,10 +73,10 @@
           <br/>
           <br/>
           <hr/>
-          </div>
+         
           
           </c:forEach>
-         
+          </div>
          </div>
          </div>
          
