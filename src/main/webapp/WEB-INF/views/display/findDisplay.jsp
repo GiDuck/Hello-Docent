@@ -229,16 +229,15 @@
     
 	$(document).ready(() => {
 	
-		$("#searchInput").on('keydown', (event) => {
-			
-			if(event.keyCode == '13'){
+	
+		var enterKey = () =>{
+		
+			if(widnow.event.keyCode == '13'){
 				clickSearch();
-				event.preventDefault();
 				
 			}
 		
-			
-		});
+		}
 		
 		
 		$("#searchBtn").on('click', ()=>{
@@ -255,7 +254,7 @@
     function clickSearch(){
     	
     	
-    	var reg = /^[가-힣a-zA-Z\s]+$/;
+    	var reg = /^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/;
     		
     	
     	
