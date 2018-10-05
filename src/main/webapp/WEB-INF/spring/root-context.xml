@@ -15,6 +15,15 @@
 	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 
 
+	<!-- 외부 설정  파일 사용을 위한 PropertyPlaceholderConfigure -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="locations">
+	<value>file:/var/user-properties/conf.properties</value>
+	</property>
+	<property name="ignoreUnresolvablePlaceholders" value="true"/>
+	</bean>
+
+
 	<context:component-scan
 		base-package="com.spov.hellodocent" use-default-filters="false">
 		<context:include-filter type="annotation"
@@ -36,9 +45,10 @@
 	<bean id="googleConnectionFactory"
 		class="org.springframework.social.google.connect.GoogleConnectionFactory">
 		<constructor-arg
-			value="179457142718-sh6kmcv4cevjvq21r32mpukflnun637p.apps.googleusercontent.com" />
-		<constructor-arg value="iwBVyjzoG61441EVe1VQygBh" />
+			value="${google.key}" />
+		<constructor-arg value="${google.secret}" />
 	</bean>
+
 
 	<bean id="googleOAuth2Parameters"
 		class="org.springframework.social.oauth2.OAuth2Parameters">
@@ -47,19 +57,20 @@
 		<property name="redirectUri"
 			value="https://www.hellodocent.net/member/googleSignInCallback" />
 
+	</bean>
 
-<!-- http://ec2-52-79-251-26.ap-northeast-2.compute.amazonaws.com:8080/member/googleSignInCallback"
- -->	</bean>
 
 	 <!-- Facebook 소셜 로그인 연결 설정 -->
 
-	<bean id="facebookConnectionFactory"
+	<bean id="facebookConnectionFactory" 
 		class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
-		<constructor-arg value="496531960766784" />
+		<constructor-arg value="${facebook.key}" />
 		<constructor-arg
-			value="15134eafa6d4fc48a421559be22559ec" />
+			value="${facebook.secret}" />
 	</bean>
-
+	
+	
+	
 	<bean id="facebookOAuth2Parameters"
 		class="org.springframework.social.oauth2.OAuth2Parameters">
 		<property name="scope" value="email" />
@@ -73,9 +84,9 @@
 	<bean id="kakaoLogin"
 		class="com.spov.hellodocent.authorization.KakaoLogin">
 		<property name="client_id"
-			value="7a4b4528fefc962b75ad9f654ef7b768" />
+			value="${kakao.key}" />
 		<property name="secret_code"
-			value="xmjk5AENnUo0sXRxGKXVKlzZeBfsR68V" />
+			value="${kakao.secret}" />
 		<property name="scope" value="email" />
 		<property name="redirectUri"
 			value="https://www.hellodocent.net/member/kakaoSignInCallback" />
@@ -91,8 +102,8 @@
 
 	<bean id="naverLogin"
 		class="com.spov.hellodocent.authorization.NaverLogin">
-		<property name="client_id" value="euaVq3Erc2IpHdLRqPEJ" />
-		<property name="secret_code" value="97xsZGE1Nz" />
+		<property name="client_id" value="${naver.key}" />
+		<property name="secret_code" value="${naver.secret}" />
 		<property name="scope" value="email" />
 		<property name="redirectUri"
 			value="https://localhost:8443/member/naverSignInCallback" />
@@ -114,8 +125,8 @@
 			name="driverClassName" />
 		<property
 			value="jdbc:log4jdbc:oracle:thin:@gdtbgl93.czhonby3ufkr.ap-northeast-2.rds.amazonaws.com:1521:ORCL" name="url" />
-		<property value="gdtbgl93" name="username" />
-		<property value="godqhrgkek93" name="password" />
+		<property value="${oracle.userKey}" name="username" />
+		<property value="${oracle.password}" name="password" />
 	</bean>
 	
 

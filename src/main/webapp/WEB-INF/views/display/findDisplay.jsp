@@ -224,7 +224,21 @@
     
     
     <script>
+    
+    
+	$(document).ready(() => {
+	
+		$("#searchBtn").on('keydown', (event)=>{
+			
+			if(event.keyCode == '13'){
+				event.preventDefault();
+				clickSearch();
+			}
+		
+			
+		});
 
+	}
 
     function clickSearch(){
     	
