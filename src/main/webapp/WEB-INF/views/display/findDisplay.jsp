@@ -240,7 +240,7 @@
 		}
 		
 		
-		$("#searchBtn").on('click', function(){
+		$("#searchBtn").on('click',()=>{
 		
 			
 			clickSearch();
@@ -256,10 +256,6 @@
     	
     	var reg = /^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/;
     		
-    	
-    	
-    	$("#searchBtn").on('click', function(){
-
     	var inputVal = $("#searchInput").val();
     	
     	
@@ -294,8 +290,7 @@
     	
     	
     	
-    	
-    	});
+    
     	
     	
     }
