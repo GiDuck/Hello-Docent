@@ -226,11 +226,11 @@
     <script>
     
 
-    
+    var enterKey;
 	$(document).ready(() => {
 	
 	
-		var enterKey = () =>{
+		enterKey = () =>{
 		
 			if(widnow.event.keyCode == '13'){
 				clickSearch();
