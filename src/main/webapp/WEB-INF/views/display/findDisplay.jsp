@@ -226,18 +226,20 @@
     <script>
     
 
-    var enterKey;
+    
 	$(document).ready(function(){
 	
 	
-		enterKey =()=>{
+		$("#searchInput").on('keydown', ()=>{
+			
 			console.log('hello');
 			if(widnow.event.keyCode == '13'){
 				clickSearch();
 				
 			}
+
+		});
 		
-		}
 		
 		
 		$("#searchBtn").on('click',()=>{
