@@ -227,10 +227,10 @@
     
 
     var enterKey;
-	$(document).ready(() => {
+	$(document).ready(function(){
 	
 	
-		enterKey = () =>{
+		enterKey = function(){
 		
 			if(widnow.event.keyCode == '13'){
 				clickSearch();
@@ -240,8 +240,8 @@
 		}
 		
 		
-		$("#searchBtn").on('click', ()=>{
-			
+		$("#searchBtn").on('click', function(){
+		
 			
 			clickSearch();
 			
