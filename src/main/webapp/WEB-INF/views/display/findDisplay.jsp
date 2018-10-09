@@ -230,11 +230,13 @@
 	$(document).ready(function(){
 	
 	
-		$("#searchInput").on('keydown', ()=>{
+		$("#searchInput").on('keydown', (e)=>{
 			
 			console.log('hello');
-			if(widnow.event.keyCode == '13'){
+			if(e.keyCode == '13'){
 				clickSearch();
+				e.preventDefault();
+
 				
 			}
 
